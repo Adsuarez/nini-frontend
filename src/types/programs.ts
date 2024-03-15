@@ -1,4 +1,6 @@
-export type Programs = {
+export type Programs = String[]
+
+export type Program = {
     codigoinstitucion:            string;
     nombreinstitucion:            string;
     codigodepartinstitucion:      string;
