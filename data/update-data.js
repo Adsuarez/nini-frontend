@@ -1,7 +1,24 @@
-import ALL_PROGRAMS_VALLE_DEL_CAUCA from "./programas-valledelcauca.json" assert { type: "json" };
+import { readFile, writeFile } from "node:fs/promises";
+import { Buffer } from "node:buffer";
 
-const ACTIVES_PROGRAMS_VALLE_DEL_CAUCA = ALL_PROGRAMS_VALLE_DEL_CAUCA.filter(
-  (program) => program.nombreestadoprograma === "Activo"
-);
-console.log(ACTIVES_PROGRAMS_VALLE_DEL_CAUCA);
-//TODO create system to create file with result of filter
+let PROGRAMS_D76;
+
+try {
+  const filePath = new URL("./programs-all-d76.json", import.meta.url);
+  const contents = await readFile(filePath, { encoding: "utf8" });
+  const ALL_PROGRAMS_D76 = JSON.parse(contents);
+
+  PROGRAMS_D76 = ALL_PROGRAMS_D76.filter(
+    (program) => program.nombreestadoprograma === "Activo"
+  );
+} catch (err) {
+  console.error(err.message);
+}
+
+try {
+  const filePath = new URL("./programs-actives-d76.json", import.meta.url);
+  const data = new Uint8Array(Buffer.from(JSON.stringify(PROGRAMS_D76)));
+  await writeFile(filePath, data);
+} catch (err) {
+  console.error(err);
+}
