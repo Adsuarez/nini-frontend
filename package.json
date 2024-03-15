@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "create-data": "node ./data/update-data.js"
   },
   "dependencies": {
     "astro": "^4.4.11"
